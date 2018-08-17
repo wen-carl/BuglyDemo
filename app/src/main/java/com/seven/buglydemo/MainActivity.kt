@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
+        btnCrash.text = "Hot Fixed"
         btnCrash.setOnClickListener {
             Toast.makeText(this, "Fix Crash about divide by 0.", Toast.LENGTH_SHORT).show()
         }
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(arrayOf(android.Manifest.permission.READ_PHONE_STATE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_LOGS), 0)
         }
+
+        tvVersion.text = getVersion()
     }
 
     override fun onResume() {
@@ -60,5 +63,8 @@ class MainActivity : AppCompatActivity() {
         tvUpgradeInfo.text = info
     }
 
-
+    private fun getVersion() : String {
+        val packageInfo = packageManager.getPackageInfo(packageName, 0)
+        return packageInfo.versionName + "." + packageInfo.versionCode
+    }
 }
